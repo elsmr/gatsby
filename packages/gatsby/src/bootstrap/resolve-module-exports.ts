@@ -153,7 +153,9 @@ export const resolveModuleExports = (
     let absPath: string | undefined
     try {
       absPath = resolver(modulePath)
-      return Object.keys(require(modulePath)).filter(
+      const module = require(modulePath)
+
+      return Object.keys(module.default ? module.default : module).filter(
         exportName => exportName !== `__esModule`
       )
     } catch (e) {

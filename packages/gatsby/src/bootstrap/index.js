@@ -11,6 +11,7 @@ const Promise = require(`bluebird`)
 const telemetry = require(`gatsby-telemetry`)
 
 const apiRunnerNode = require(`../utils/api-runner-node`)
+import * as tsNode from "ts-node"
 import { getBrowsersList } from "../utils/browserslist"
 import { createSchemaCustomization } from "../utils/create-schema-customization"
 import { startPluginRunner } from "../redux/plugin-runner"
@@ -29,7 +30,8 @@ process.on(`unhandledRejection`, (reason, p) => {
   reporter.panic(reason)
 })
 
-import { createGraphQLRunner } from "./create-graphql-runner"
+tsNode.register({ compilerOptions: { jsx: `preserve` } })
+
 const { extractQueries } = require(`../query/query-watcher`)
 import * as requiresWriter from "./requires-writer"
 import { writeRedirects, startRedirectListener } from "./redirects-writer"

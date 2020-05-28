@@ -78,7 +78,9 @@ const getLocalReporter = (activity, reporter) =>
     : reporter
 
 const runAPI = (plugin, api, args, activity) => {
-  const gatsbyNode = require(`${plugin.resolve}/gatsby-node`)
+  const module = require(`${plugin.resolve}/gatsby-node`)
+  const gatsbyNode = module.default ? module.default : module
+
   if (gatsbyNode[api]) {
     const parentSpan = args && args.parentSpan
     const spanOptions = parentSpan ? { childOf: parentSpan } : {}
